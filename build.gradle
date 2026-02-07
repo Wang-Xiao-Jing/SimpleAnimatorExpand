@@ -89,7 +89,7 @@ configurations {
 }
 
 dependencies {
-  api "maven.modrinth:simpleanimator:$simpleanimator_maven_version"
+  api "maven.modrinth:simpleanimator:neoforge-1.21-$simpleanimator_version"
 
   compileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
   annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
@@ -100,7 +100,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
     minecraft_version           : minecraft_version,
     minecraft_version_range     : minecraft_version_range,
     neo_version                 : neo_version,
-    simpleanimator_version_range: simpleanimator_version_range,
+    simpleanimator_version: simpleanimator_version,
     loader_version_range        : loader_version_range,
     mod_id                      : mod_id,
     mod_name                    : mod_name,
