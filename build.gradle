@@ -93,8 +93,6 @@ configurations {
 
 dependencies {
   api "maven.modrinth:simpleanimator:neoforge-1.21-$simpleanimator_version"
-  implementation "com.github.LouisQuepierts:SimpleAnimator:-SNAPSHOT"
-//  implementation project(':SimpleAnimator')
 
   compileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
   annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
