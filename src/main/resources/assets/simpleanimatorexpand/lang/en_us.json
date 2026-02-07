@@ -2,7 +2,6 @@
   "itemGroup.simpleanimatorexpand": "Example Mod Tab",
   "block.simpleanimatorexpand.example_block": "Example Block",
   "item.simpleanimatorexpand.example_item": "Example Item",
-
   "simpleanimatorexpand.configuration.title": "SimpleAnimatorExpand Configs",
   "simpleanimatorexpand.configuration.section.simpleanimatorexpand.common.toml": "SimpleAnimatorExpand Configs",
   "simpleanimatorexpand.configuration.section.simpleanimatorexpand.common.toml.title": "SimpleAnimatorExpand Configs",
