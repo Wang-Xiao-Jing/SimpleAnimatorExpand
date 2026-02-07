@@ -1,0 +1,3 @@
+[submodule "libs/SimpleAnimator"]
+	path = libs/SimpleAnimator
+	url = https://github.com/LouisQuepierts/SimpleAnimator.git
