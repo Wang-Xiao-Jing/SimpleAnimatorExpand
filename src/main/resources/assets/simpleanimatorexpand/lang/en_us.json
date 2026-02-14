@@ -1,12 +1,6 @@
 {
-  "itemGroup.simpleanimatorexpand": "Example Mod Tab",
-  "block.simpleanimatorexpand.example_block": "Example Block",
-  "item.simpleanimatorexpand.example_item": "Example Item",
-  "simpleanimatorexpand.configuration.title": "SimpleAnimatorExpand Configs",
-  "simpleanimatorexpand.configuration.section.simpleanimatorexpand.common.toml": "SimpleAnimatorExpand Configs",
-  "simpleanimatorexpand.configuration.section.simpleanimatorexpand.common.toml.title": "SimpleAnimatorExpand Configs",
-  "simpleanimatorexpand.configuration.items": "Item List",
-  "simpleanimatorexpand.configuration.logDirtBlock": "Log Dirt Block",
-  "simpleanimatorexpand.configuration.magicNumberIntroduction": "Magic Number Text",
-  "simpleanimatorexpand.configuration.magicNumber": "Magic Number"
+  "animator.commands.failed.invalid_source": "Invalid execute source for command",
+  "animator.commands.failed.same_player": "You cannot get request from your self",
+  "animator.commands.failed.nonexistent_request": "Nonexistent request",
+  "animator.commands.message.query": "Animation[{}]"
 }

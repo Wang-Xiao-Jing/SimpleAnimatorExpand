@@ -38,7 +38,7 @@ public enum NetworkPackets {
   }
 
   public static <T extends IPacket> CustomPacketPayload.Type<T> createType(Class<T> type) {
-    ResourceLocation location = ResourceLocation.fromNamespaceAndPath("simple_animator", type.getSimpleName().toLowerCase(Locale.ROOT));
+    ResourceLocation location = ResourceLocation.fromNamespaceAndPath(SimpleAnimator.MOD_ID, type.getSimpleName().toLowerCase(Locale.ROOT));
     return new CustomPacketPayload.Type<>(location);
   }
 

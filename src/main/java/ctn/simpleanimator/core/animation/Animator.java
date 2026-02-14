@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.UUID;
 
 public class Animator {
-  public static final ResourceLocation EMPTY = ResourceLocation.fromNamespaceAndPath("simple_animator", "empty");
+  public static final ResourceLocation EMPTY = ResourceLocation.fromNamespaceAndPath(SimpleAnimator.MOD_ID, "empty");
   protected final UUID uuid;
   protected ResourceLocation animationLocation;
   protected Animation animation;
