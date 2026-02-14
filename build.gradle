@@ -3,7 +3,6 @@ plugins {
   id 'maven-publish'
   id 'net.neoforged.moddev' version '2.0.140'
   id 'idea'
-//  id 'net.neoforged.gradle.userdev' version '7.1.20'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -92,7 +91,7 @@ configurations {
 }
 
 dependencies {
-  api "maven.modrinth:simpleanimator:neoforge-1.21-$simpleanimator_version"
+//  api "maven.modrinth:simpleanimator:neoforge-1.21-$simpleanimator_version"
 
   compileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
   annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
@@ -103,7 +102,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
     minecraft_version      : minecraft_version,
     minecraft_version_range: minecraft_version_range,
     neo_version            : neo_version,
-    simpleanimator_version : simpleanimator_version,
+//    simpleanimator_version : simpleanimator_version,
     loader_version_range   : loader_version_range,
     mod_id                 : mod_id,
     mod_name               : mod_name,

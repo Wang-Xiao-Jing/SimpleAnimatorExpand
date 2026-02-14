@@ -1,0 +1,64 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package ctn.simpleanimator.core.command;
+
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
+import ctn.simpleanimator.api.IAnimateHandler;
+import ctn.simpleanimator.core.SimpleAnimator;
+import ctn.simpleanimator.core.network.packet.AnimatorPlayPacket;
+import ctn.simpleanimator.core.network.packet.AnimatorStopPacket;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.GameType;
+
+import java.util.UUID;
+
+public class AnimateCommand {
+  public static final SuggestionProvider<CommandSourceStack> SUGGEST_ANIMATION = (context, builder) -> SharedSuggestionProvider.suggestResource(SimpleAnimator.getProxy().getAnimationManager().getAnimationNames(), builder);
+
+  public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+    dispatcher.register((LiteralArgumentBuilder) ((LiteralArgumentBuilder) Commands.literal("animate").requires((stack) -> stack.hasPermission(2))).then(Commands.literal("play").then(Commands.argument("animation", ResourceLocationArgument.id()).suggests(SUGGEST_ANIMATION).executes(AnimateCommand::play))).then(Commands.literal("stop").executes(AnimateCommand::stop)));
+  }
+
+  private static int stop(CommandContext<CommandSourceStack> context) {
+    Entity var2 = context.getSource().getEntity();
+    if (var2 instanceof ServerPlayer player) {
+      UUID uuid = player.getUUID();
+      if (((IAnimateHandler) player).simpleanimator$stopAnimate(false)) {
+        SimpleAnimator.getNetwork().sendToAllPlayers(new AnimatorStopPacket(uuid), player);
+      }
+    }
+
+    return 1;
+  }
+
+  private static int play(CommandContext<CommandSourceStack> context) {
+    Entity var2 = context.getSource().getEntity();
+    if (var2 instanceof ServerPlayer player) {
+      if (player.gameMode.getGameModeForPlayer() == GameType.SPECTATOR) {
+        return 0;
+      } else {
+        ResourceLocation location = ResourceLocationArgument.getId(context, "animation");
+        UUID uuid = player.getUUID();
+        if (((IAnimateHandler) player).simpleanimator$playAnimate(location, false)) {
+          SimpleAnimator.getNetwork().sendToAllPlayers(new AnimatorPlayPacket(uuid, location), player);
+        }
+
+        return 1;
+      }
+    } else {
+      return 0;
+    }
+  }
+}

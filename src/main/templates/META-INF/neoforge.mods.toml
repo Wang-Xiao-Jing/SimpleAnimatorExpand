@@ -11,8 +11,12 @@ displayName = "${mod_name}" #mandatory
 description = '''
 Example mod description.
 '''
+
 [[mixins]]
 config = "${mod_id}.mixins.json"
+
+[[mixins]]
+config = "simple_animator.mixins.json"
 
 [[dependencies.${ mod_id }]] #optional
 modId = "neoforge" #mandatory
@@ -26,11 +30,4 @@ modId = "minecraft"
 type = "required"
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.${ mod_id }]]
-modId = "simple_animator"
-type = "required"
-versionRange = "[${simpleanimator_version},)"
-ordering = "AFTER"
 side = "BOTH"
