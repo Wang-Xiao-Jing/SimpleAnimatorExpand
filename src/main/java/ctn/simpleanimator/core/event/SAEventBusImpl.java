@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public class SAEventBusImpl implements ISAEventBus {
   private final Logger logger = LogUtils.getLogger();
-  private final IdentityHashMap<Class<?>, ListenerList> map = new IdentityHashMap();
+  private final IdentityHashMap<Class<?>, ListenerList> map = new IdentityHashMap<>();
 
   public <T extends SAEvent> void addListener(Class<T> clazz, Consumer<T> listener) {
     if (Modifier.isAbstract(clazz.getModifiers())) {
@@ -28,9 +28,7 @@ public class SAEventBusImpl implements ISAEventBus {
 
   public <T extends SAEvent> T post(T event) {
     ListenerList list = this.map.get(event.getClass());
-    if (list == null) {
-      return event;
-    } else {
+    if (list != null) {
       try {
         for (Consumer<SAEvent> listener : list.getListeners()) {
           listener.accept(event);
@@ -39,7 +37,7 @@ public class SAEventBusImpl implements ISAEventBus {
         this.logger.warn("Simple Animator Event Bus Error", e);
       }
 
-      return event;
     }
+    return event;
   }
 }

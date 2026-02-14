@@ -6,7 +6,6 @@
 package ctn.simpleanimator.core.command;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import ctn.simpleanimator.api.IAnimateHandler;
@@ -28,7 +27,7 @@ public class AnimateCommand {
   public static final SuggestionProvider<CommandSourceStack> SUGGEST_ANIMATION = (context, builder) -> SharedSuggestionProvider.suggestResource(SimpleAnimator.getProxy().getAnimationManager().getAnimationNames(), builder);
 
   public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-    dispatcher.register((LiteralArgumentBuilder) ((LiteralArgumentBuilder) Commands.literal("animate").requires((stack) -> stack.hasPermission(2))).then(Commands.literal("play").then(Commands.argument("animation", ResourceLocationArgument.id()).suggests(SUGGEST_ANIMATION).executes(AnimateCommand::play))).then(Commands.literal("stop").executes(AnimateCommand::stop)));
+    dispatcher.register((Commands.literal("animate").requires((stack) -> stack.hasPermission(2))).then(Commands.literal("play").then(Commands.argument("animation", ResourceLocationArgument.id()).suggests(SUGGEST_ANIMATION).executes(AnimateCommand::play))).then(Commands.literal("stop").executes(AnimateCommand::stop)));
   }
 
   private static int stop(CommandContext<CommandSourceStack> context) {

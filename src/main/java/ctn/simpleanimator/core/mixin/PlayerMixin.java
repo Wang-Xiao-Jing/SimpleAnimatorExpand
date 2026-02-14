@@ -169,6 +169,7 @@ public abstract class PlayerMixin extends LivingEntity implements IAnimateHandle
 
   }
 
+  @Unique
   @OnlyIn(Dist.CLIENT)
   private void simpleanimator$innerNavigate(Player requester) {
     SimpleAnimator.getClient().getNavigator().navigateTo(requester, 1.0F, 0.0F, () -> this.simpleanimator$acceptInteract(requester, true, true));

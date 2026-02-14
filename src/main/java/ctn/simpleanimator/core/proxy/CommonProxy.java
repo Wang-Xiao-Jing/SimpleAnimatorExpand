@@ -19,7 +19,7 @@ public class CommonProxy {
   private final CommonConfiguration config;
 
   public CommonProxy(Runnable setup) {
-    this(new AnimatorManager(), setup);
+    this(new AnimatorManager<>(), setup);
   }
 
   protected CommonProxy(AnimatorManager<? extends Animator> animatorManager, Runnable setup) {

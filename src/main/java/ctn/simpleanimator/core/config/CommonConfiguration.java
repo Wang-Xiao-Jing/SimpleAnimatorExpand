@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 
 public class CommonConfiguration {
   private static final File FILE = new File("config", "simpleanimator-common.json");
-  public int interactInviteDistanceSquare = 1024;
+  public final int interactInviteDistanceSquare = 1024;
 
   CommonConfiguration() {
   }

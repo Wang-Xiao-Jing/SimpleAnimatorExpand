@@ -40,7 +40,7 @@ public abstract class CapeLayerMixin extends RenderLayer<AbstractClientPlayer, P
   public void simpleanimator$followBody(PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, AbstractClientPlayer pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch, CallbackInfo ci) {
     ClientAnimator animator = SimpleAnimator.getClient().getClientAnimatorManager().getAnimator(pLivingEntity.getUUID());
     if (animator != null && animator.isRunning()) {
-      ((PlayerModel) this.getParentModel()).body.translateAndRotate(pPoseStack);
+      ((PlayerModel<?>) this.getParentModel()).body.translateAndRotate(pPoseStack);
     }
   }
 }

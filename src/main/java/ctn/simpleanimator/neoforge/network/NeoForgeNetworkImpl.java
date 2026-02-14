@@ -7,7 +7,6 @@ package ctn.simpleanimator.neoforge.network;
 
 import com.google.common.collect.Sets;
 import ctn.simpleanimator.core.network.*;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;

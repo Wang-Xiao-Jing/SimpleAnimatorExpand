@@ -41,19 +41,17 @@ import java.util.UUID;
 public class ClientAnimator extends Animator {
   private static final Object2IntMap<String> BUILTIN_VARIABLES;
   private static final ModelPart ROOT;
-  private final EnumMap<ModelBone, Cache> cache = new EnumMap(ModelBone.class);
-  private final EnumMap<IKBone, IKCache> ikCache = new EnumMap(IKBone.class);
-  private final Object2ObjectMap<String, VariableHolder> variables = new Object2ObjectOpenHashMap();
+  private final EnumMap<ModelBone, Cache> cache = new EnumMap<>(ModelBone.class);
+  private final EnumMap<IKBone, IKCache> ikCache = new EnumMap<>(IKBone.class);
+  private final Object2ObjectMap<String, VariableHolder> variables = new Object2ObjectOpenHashMap<>();
   private boolean processed = false;
   private boolean shouldUpdate = false;
 
   public ClientAnimator(UUID uuid) {
     super(uuid);
-    ObjectIterator var2 = BUILTIN_VARIABLES.object2IntEntrySet().iterator();
 
-    while (var2.hasNext()) {
-      Object2IntMap.Entry<String> variable = (Object2IntMap.Entry) var2.next();
-      this.variables.put(variable.getKey(), VariableHolder.get(variable.getIntValue()));
+    for (Object2IntMap.Entry<String> stringEntry : BUILTIN_VARIABLES.object2IntEntrySet()) {
+      this.variables.put(stringEntry.getKey(), VariableHolder.get(stringEntry.getIntValue()));
     }
 
     for (ModelBone value : ModelBone.values()) {
@@ -77,11 +75,9 @@ public class ClientAnimator extends Animator {
     super.sync(packet);
     if (!location.equals(this.animationLocation) || this.animation != null) {
       Object2IntMap<String> animationVariables = this.animation.getVariables();
-      ObjectIterator var4 = animationVariables.object2IntEntrySet().iterator();
 
-      while (var4.hasNext()) {
-        Object2IntMap.Entry<String> entry = (Object2IntMap.Entry) var4.next();
-        this.variables.put(entry.getKey(), VariableHolder.get(entry.getIntValue()));
+      for (Object2IntMap.Entry<String> stringEntry : animationVariables.object2IntEntrySet()) {
+        this.variables.put(stringEntry.getKey(), VariableHolder.get(stringEntry.getIntValue()));
       }
     }
 
@@ -98,11 +94,9 @@ public class ClientAnimator extends Animator {
     } else if (this.animation == null) {
       return false;
     } else {
-      ObjectIterator var3 = this.animation.getVariables().object2IntEntrySet().iterator();
 
-      while (var3.hasNext()) {
-        Object2IntMap.Entry<String> entry = (Object2IntMap.Entry) var3.next();
-        this.variables.computeIfAbsent(entry.getKey(), (key) -> VariableHolder.get(entry.getIntValue()));
+      for (Object2IntMap.Entry<String> stringEntry : this.animation.getVariables().object2IntEntrySet()) {
+        this.variables.computeIfAbsent(stringEntry.getKey(), (key) -> VariableHolder.get(stringEntry.getIntValue()));
       }
 
       this.nextState = this.animation.hasEnterAnimation() ? AnimationState.ENTER : AnimationState.LOOP;
@@ -350,11 +344,9 @@ public class ClientAnimator extends Animator {
       cache.position.set(0.0F);
       cache.rotation.set(0.0F);
     });
-    Map<String, VariableHolder> temp = new Object2ObjectOpenHashMap(this.variables.size());
-    ObjectIterator var3 = BUILTIN_VARIABLES.keySet().iterator();
+    Map<String, VariableHolder> temp = new Object2ObjectOpenHashMap<>(this.variables.size());
 
-    while (var3.hasNext()) {
-      String variable = (String) var3.next();
+    for (String variable : BUILTIN_VARIABLES.keySet()) {
       temp.put(variable, this.variables.get(variable));
     }
 
@@ -380,7 +372,7 @@ public class ClientAnimator extends Animator {
 
   static {
     ROOT = new ModelPart(Collections.EMPTY_LIST, Collections.EMPTY_MAP);
-    Object2IntOpenHashMap<String> map = new Object2IntOpenHashMap();
+    Object2IntOpenHashMap<String> map = new Object2IntOpenHashMap<>();
     map.put(IKBone.HEAD.varName, 1);
     map.put(IKBone.LEFT_ARM.varName, 1);
     map.put(IKBone.RIGHT_ARM.varName, 1);

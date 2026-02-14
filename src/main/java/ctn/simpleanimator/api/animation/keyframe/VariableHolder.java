@@ -17,7 +17,7 @@ public class VariableHolder {
   private float value;
 
   public static VariableHolder get(int size) {
-    Object var10000;
+    VariableHolder var10000;
     switch (size) {
       case 1 -> var10000 = new VariableHolder(0.0F);
       case 2 -> var10000 = new Float2(0.0F, 0.0F);
@@ -25,12 +25,12 @@ public class VariableHolder {
       default -> var10000 = VariableHolder.Immutable.INSTANCE;
     }
 
-    return (VariableHolder) var10000;
+    return var10000;
   }
 
   public static VariableHolder decode(FriendlyByteBuf byteBuf) {
     byte b = byteBuf.readByte();
-    Object var10000;
+    VariableHolder var10000;
     switch (b) {
       case 0 -> var10000 = new VariableHolder(byteBuf);
       case 1 -> var10000 = new Float2(byteBuf);
@@ -38,14 +38,14 @@ public class VariableHolder {
       default -> var10000 = VariableHolder.Immutable.INSTANCE;
     }
 
-    return (VariableHolder) var10000;
+    return var10000;
   }
 
   public static VariableHolder fromJsonArray(JsonArray array, int size) {
     float x = array.get(0).getAsFloat();
     float y = array.get(1).getAsFloat();
     float z = array.get(2).getAsFloat();
-    Object var10000;
+    VariableHolder var10000;
     switch (size) {
       case 1 -> var10000 = new VariableHolder(x);
       case 2 -> var10000 = new Float2(x, y);
@@ -53,7 +53,7 @@ public class VariableHolder {
       default -> var10000 = VariableHolder.Immutable.INSTANCE;
     }
 
-    return (VariableHolder) var10000;
+    return var10000;
   }
 
   protected VariableHolder(FriendlyByteBuf byteBuf) {

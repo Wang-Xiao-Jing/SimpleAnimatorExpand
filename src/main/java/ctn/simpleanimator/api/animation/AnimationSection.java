@@ -51,8 +51,8 @@ public class AnimationSection {
       Map<String, String> variables = getVariables(var);
       float fadeIn = tryParse(variables.get("fade_in"), 0.05F);
       float fadeOut = tryParse(variables.get("fade_out"), 0.05F);
-      EnumMap<ModelBone, BoneData> keyFrames = new EnumMap(ModelBone.class);
-      Object2ObjectMap<String, VariableKeyFrame.Group> varFrames = new Object2ObjectOpenHashMap();
+      EnumMap<ModelBone, BoneData> keyFrames = new EnumMap<>(ModelBone.class);
+      Object2ObjectMap<String, VariableKeyFrame.Group> varFrames = new Object2ObjectOpenHashMap<>();
       JsonObject bones = json.getAsJsonObject("bones");
 
       for (Map.Entry<String, JsonElement> entry : bones.entrySet()) {
@@ -85,8 +85,8 @@ public class AnimationSection {
       Map<String, String> variables = getVariables(var);
       float fadeIn = tryParse(variables.get("fade_in"), 0.05F);
       float fadeOut = tryParse(variables.get("fade_out"), 0.05F);
-      EnumMap<ModelBone, BoneData> keyFrames = new EnumMap(ModelBone.class);
-      Object2ObjectMap<String, VariableKeyFrame.Group> varFrames = new Object2ObjectOpenHashMap();
+      EnumMap<ModelBone, BoneData> keyFrames = new EnumMap<>(ModelBone.class);
+      Object2ObjectMap<String, VariableKeyFrame.Group> varFrames = new Object2ObjectOpenHashMap<>();
       JsonObject bones = json.getAsJsonObject("bones");
 
       for (Map.Entry<String, JsonElement> entry : bones.entrySet()) {
@@ -108,11 +108,9 @@ public class AnimationSection {
   }
 
   public void getVariables(Object2IntMap<String> set) {
-    ObjectIterator var2 = this.varFrames.entrySet().iterator();
 
-    while (var2.hasNext()) {
-      Map.Entry<String, VariableKeyFrame.Group> entry = (Map.Entry) var2.next();
-      set.put(entry.getKey(), entry.getValue().variableSize());
+    for (Map.Entry<String, VariableKeyFrame.Group> stringGroupEntry : this.varFrames.entrySet()) {
+      set.put(stringGroupEntry.getKey(), stringGroupEntry.getValue().variableSize());
     }
 
   }
@@ -202,13 +200,13 @@ public class AnimationSection {
         VariableHolder preHolder = VariableHolder.fromJsonArray(pre, size);
         VariableHolder postHolder = post == null ? preHolder : VariableHolder.fromJsonArray(post, size);
         return new VariableKeyFrame(time, preHolder, postHolder, mode);
-      }).toArray((x$0) -> new VariableKeyFrame[x$0]);
+      }).toArray(VariableKeyFrame[]::new);
       return new VariableKeyFrame.Group(array, size);
     }
   }
 
   private static Map<String, String> getVariables(String input) {
-    Map<String, String> result = new HashMap();
+    Map<String, String> result = new HashMap<>();
     if (StringUtil.isNullOrEmpty(input)) {
       return result;
     } else {
@@ -258,7 +256,7 @@ public class AnimationSection {
         Vector3f preRotation = new Vector3f((float) Math.toRadians(pre.get(0).getAsFloat()), (float) Math.toRadians(pre.get(1).getAsFloat()), (float) Math.toRadians(pre.get(2).getAsFloat()));
         Vector3f postRotation = post == null ? preRotation : new Vector3f((float) Math.toRadians(post.get(0).getAsFloat()), (float) Math.toRadians(post.get(1).getAsFloat()), (float) Math.toRadians(post.get(2).getAsFloat()));
         return new VectorKeyFrame(time, preRotation, postRotation, mode);
-      }).toArray((x$0) -> new VectorKeyFrame[x$0]);
+      }).toArray(VectorKeyFrame[]::new);
     }
   }
 
@@ -298,7 +296,7 @@ public class AnimationSection {
         }
 
         return new VectorKeyFrame(time, prePosition, postPosition, mode);
-      }).toArray((x$0) -> new VectorKeyFrame[x$0]);
+      }).toArray(VectorKeyFrame[]::new);
     }
   }
 
@@ -407,7 +405,7 @@ public class AnimationSection {
     float length = byteBuf.readFloat();
     float fadeIn = byteBuf.readFloat();
     float fadeOut = byteBuf.readFloat();
-    EnumMap<ModelBone, BoneData> map = new EnumMap(ModelBone.class);
+    EnumMap<ModelBone, BoneData> map = new EnumMap<>(ModelBone.class);
 
     for (ModelBone value : ModelBone.values()) {
       Optional<BoneData> optional = byteBuf.readOptional(BoneData::fromNetwork);
@@ -423,11 +421,11 @@ public class AnimationSection {
   }
 
   private static VariableKeyFrame[] readVariableKeyFrames(FriendlyByteBuf byteBuf) {
-    return BoneData.readKeyFrames(byteBuf, (x$0) -> new VariableKeyFrame[x$0], VariableKeyFrame.class);
+    return BoneData.readKeyFrames(byteBuf, VariableKeyFrame[]::new, VariableKeyFrame.class);
   }
 
   static {
-    Object2ByteOpenHashMap<String> keywords = new Object2ByteOpenHashMap(6);
+    Object2ByteOpenHashMap<String> keywords = new Object2ByteOpenHashMap<>(6);
     keywords.put("vec2", (byte) 2);
     keywords.put("vec3", (byte) 3);
     keywords.put("float", (byte) 1);
@@ -449,8 +447,8 @@ public class AnimationSection {
     }
 
     public static BoneData fromNetwork(FriendlyByteBuf byteBuf) {
-      VectorKeyFrame[] rotate = readKeyFrames(byteBuf, (x$0) -> new VectorKeyFrame[x$0], VectorKeyFrame.class);
-      VectorKeyFrame[] position = readKeyFrames(byteBuf, (x$0) -> new VectorKeyFrame[x$0], VectorKeyFrame.class);
+      VectorKeyFrame[] rotate = readKeyFrames(byteBuf, VectorKeyFrame[]::new, VectorKeyFrame.class);
+      VectorKeyFrame[] position = readKeyFrames(byteBuf, VectorKeyFrame[]::new, VectorKeyFrame.class);
       return new BoneData(rotate, position);
     }
 

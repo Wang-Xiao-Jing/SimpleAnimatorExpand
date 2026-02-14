@@ -26,7 +26,6 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.util.profiling.ProfilerFiller;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -59,9 +58,9 @@ public class AnimationManager implements PreparableReloadListener {
     return this.interactions.get(location);
   }
 
-  public @NotNull CompletableFuture<Void> reload(PreparableReloadListener.PreparationBarrier pPreparationBarrier, ResourceManager pResourceManager, ProfilerFiller pPreparationsProfiler, ProfilerFiller pReloadProfiler, Executor pBackgroundExecutor, Executor pGameExecutor) {
+  public CompletableFuture<Void> reload(PreparationBarrier pPreparationBarrier, ResourceManager pResourceManager, ProfilerFiller pPreparationsProfiler, ProfilerFiller pReloadProfiler, Executor pBackgroundExecutor, Executor pGameExecutor) {
     CompletableFuture<List<Pair<ResourceLocation, Animation[]>>> animations = this.load(pResourceManager, pBackgroundExecutor);
-    CompletableFuture var10000 = CompletableFuture.allOf(animations);
+    CompletableFuture<Void> var10000 = CompletableFuture.allOf(animations);
     Objects.requireNonNull(pPreparationBarrier);
     return var10000.thenCompose(pPreparationBarrier::wait).thenAcceptAsync((v) -> {
       ImmutableMap.Builder<ResourceLocation, Animation> animationBuilder = ImmutableMap.builder();
@@ -84,13 +83,13 @@ public class AnimationManager implements PreparableReloadListener {
         interactions.put(pair.getFirst(), new Interaction(pair.getFirst().withPrefix(Type.INVITE.path), pair.getFirst().withPrefix(Type.REQUESTER.path), pair.getFirst().withPrefix(Type.RECEIVER.path)));
       }
 
-      return Arrays.stream(pair.getSecond()).map((animation) -> new Pair(pair.getFirst().withPrefix(animation.getType().path), animation));
-    }).forEach((pair) -> animations.put((ResourceLocation) pair.getFirst(), (Animation) pair.getSecond()));
+      return Arrays.stream(pair.getSecond()).map((animation) -> new Pair<>(pair.getFirst().withPrefix(animation.getType().path), animation));
+    }).forEach((pair) -> animations.put(pair.getFirst(), pair.getSecond()));
   }
 
   private CompletableFuture<List<Pair<ResourceLocation, Animation[]>>> load(ResourceManager pResourceManager, Executor pBackgroundExecutor) {
     return CompletableFuture.supplyAsync(() -> ANIMATION_LISTER.listMatchingResourceStacks(pResourceManager), pBackgroundExecutor).thenCompose((map) -> {
-      List<CompletableFuture<Pair<ResourceLocation, Animation[]>>> list = new ArrayList(map.size());
+      List<CompletableFuture<Pair<ResourceLocation, Animation[]>>> list = new ArrayList<>(map.size());
 
       for (Map.Entry<ResourceLocation, List<Resource>> entry : map.entrySet()) {
         ResourceLocation location = entry.getKey();
@@ -109,7 +108,7 @@ public class AnimationManager implements PreparableReloadListener {
         }
       }
 
-      return Util.sequence(list).thenApply((result) -> (List) result.stream().filter(Objects::nonNull).collect(Collectors.toList()));
+      return Util.sequence(list).thenApply((result) -> result.stream().filter(Objects::nonNull).collect(Collectors.toList()));
     });
   }
 
@@ -122,7 +121,7 @@ public class AnimationManager implements PreparableReloadListener {
   }
 
   public List<Pair<ResourceLocation, Animation[]>> loadExtern() {
-    final List<Pair<ResourceLocation, Animation[]>> animations = new ArrayList();
+    final List<Pair<ResourceLocation, Animation[]>> animations = new ArrayList<>();
     if (!Files.exists(EXTERMAL_PATH)) {
       try {
         Files.createDirectories(EXTERMAL_PATH);
@@ -134,7 +133,7 @@ public class AnimationManager implements PreparableReloadListener {
     }
 
     try {
-      Files.walkFileTree(EXTERMAL_PATH, new SimpleFileVisitor<Path>() {
+      Files.walkFileTree(EXTERMAL_PATH, new SimpleFileVisitor<>() {
         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
           if (Files.isRegularFile(file) && file.toString().endsWith(".json")) {
             AnimationManager.load(file, animations);

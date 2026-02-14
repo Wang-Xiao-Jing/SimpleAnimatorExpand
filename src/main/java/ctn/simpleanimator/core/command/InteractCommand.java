@@ -7,7 +7,6 @@ package ctn.simpleanimator.core.command;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -32,7 +31,7 @@ public class InteractCommand {
   private static final SuggestionProvider<CommandSourceStack> SUGGEST_PLAYER = (context, builder) -> SharedSuggestionProvider.suggest(getPlayerNames(context.getSource()), builder);
 
   public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-    dispatcher.register((LiteralArgumentBuilder) ((LiteralArgumentBuilder) Commands.literal("interact").requires((stack) -> stack.hasPermission(2))).then(Commands.literal("accept").then(Commands.argument("requester", EntityArgument.player()).suggests(SUGGEST_PLAYER).executes(InteractCommand::accept))).then(Commands.literal("invite").then(Commands.argument("target", EntityArgument.player()).suggests(SUGGEST_PLAYER).then(Commands.argument("interaction", ResourceLocationArgument.id()).suggests(SUGGEST_INTERACTION).executes(InteractCommand::invite)))));
+    dispatcher.register(Commands.literal("interact").requires((stack) -> stack.hasPermission(2)).then(Commands.literal("accept").then(Commands.argument("requester", EntityArgument.player()).suggests(SUGGEST_PLAYER).executes(InteractCommand::accept))).then(Commands.literal("invite").then(Commands.argument("target", EntityArgument.player()).suggests(SUGGEST_PLAYER).then(Commands.argument("interaction", ResourceLocationArgument.id()).suggests(SUGGEST_INTERACTION).executes(InteractCommand::invite)))));
   }
 
   private static int invite(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {

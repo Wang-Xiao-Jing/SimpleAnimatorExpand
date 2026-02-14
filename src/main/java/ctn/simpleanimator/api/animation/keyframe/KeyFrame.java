@@ -15,7 +15,7 @@ public abstract class KeyFrame<T> {
   protected final float time;
   protected final LerpMode mode;
   protected final T pre;
-  protected T post;
+  protected final T post;
 
   public KeyFrame(FriendlyByteBuf byteBuf, Function<FriendlyByteBuf, T> decoder) {
     this.time = byteBuf.readFloat();
@@ -57,7 +57,7 @@ public abstract class KeyFrame<T> {
   public abstract T catmullRomInterpolation(T var1, T var2, T var3, T var4, float var5);
 
   public static class Decoder {
-    private static final IdentityHashMap<Class<? extends KeyFrame<?>>, Function<FriendlyByteBuf, KeyFrame<?>>> DECODERS = new IdentityHashMap(3);
+    private static final IdentityHashMap<Class<? extends KeyFrame<?>>, Function<FriendlyByteBuf, KeyFrame<?>>> DECODERS = new IdentityHashMap<>(3);
 
     public static <T extends KeyFrame<?>> T decode(FriendlyByteBuf byteBuf, Class<T> clazz) {
       Function<FriendlyByteBuf, KeyFrame<?>> decoder = DECODERS.get(clazz);

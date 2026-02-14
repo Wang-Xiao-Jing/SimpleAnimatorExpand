@@ -187,7 +187,7 @@ public class Animation {
   }
 
   public Object2IntMap<String> getVariables() {
-    Object2IntMap<String> set = new Object2IntOpenHashMap();
+    Object2IntMap<String> set = new Object2IntOpenHashMap<>();
     if (this.enter != null) {
       this.enter.getVariables(set);
     }

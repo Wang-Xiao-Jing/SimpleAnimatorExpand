@@ -43,7 +43,7 @@ public class VariableKeyFrame extends KeyFrame<VariableHolder> {
     }
 
     public static Group fromNetwork(FriendlyByteBuf byteBuf) {
-      VariableKeyFrame[] frames = BoneData.readKeyFrames(byteBuf, (x$0) -> new VariableKeyFrame[x$0], VariableKeyFrame.class);
+      VariableKeyFrame[] frames = BoneData.readKeyFrames(byteBuf, VariableKeyFrame[]::new, VariableKeyFrame.class);
       int variableSize = byteBuf.readVarInt();
       return new Group(frames, variableSize);
     }

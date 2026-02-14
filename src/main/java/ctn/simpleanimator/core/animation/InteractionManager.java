@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class InteractionManager {
-  protected final Map<UUID, RequestHolder> requests = new HashMap();
+  protected final Map<UUID, RequestHolder> requests = new HashMap<>();
 
   public void reset() {
     for (RequestHolder holder : this.requests.values()) {

@@ -47,7 +47,7 @@ public enum ModelBone {
   }
 
   static {
-    ImmutableMap.Builder<String, ModelBone> builder = new ImmutableMap.Builder();
+    ImmutableMap.Builder<String, ModelBone> builder = new ImmutableMap.Builder<>();
 
     for (ModelBone value : values()) {
       builder.put(value.name().toLowerCase(), value);

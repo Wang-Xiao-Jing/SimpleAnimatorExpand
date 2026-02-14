@@ -34,7 +34,7 @@ public abstract class EntityMixin {
   public double zo;
 
   @Shadow
-  protected abstract Vec3 calculateViewVector(float var1, float var2);
+  public abstract Vec3 calculateViewVector(float var1, float var2);
 
   @Shadow
   public abstract Vec3 position();

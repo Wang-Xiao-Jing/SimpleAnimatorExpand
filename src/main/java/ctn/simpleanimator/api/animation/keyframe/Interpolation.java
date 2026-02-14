@@ -37,10 +37,8 @@ public class Interpolation {
         case STEP -> out = kf1.getPre();
       }
 
-      return out;
-    } else {
-      return out;
     }
+    return out;
   }
 
   public static VariableHolder linerInterpolation(VariableHolder p1, VariableHolder p2, float delta) {

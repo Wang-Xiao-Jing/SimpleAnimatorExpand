@@ -28,7 +28,7 @@ public class ClientUpdateAnimatorPacket implements ISync {
 
   public ClientUpdateAnimatorPacket(FriendlyByteBuf byteBuf) {
     int capacity = byteBuf.readInt();
-    this.animators = new ArrayList(capacity);
+    this.animators = new ArrayList<>(capacity);
 
     for (int i = 0; i < capacity; ++i) {
       this.animators.add(new AnimatorDataPacket(byteBuf.readUUID(), byteBuf.readResourceLocation(), byteBuf.readEnum(AnimationState.class), byteBuf.readEnum(AnimationState.class), byteBuf.readEnum(Animator.ProcessState.class), byteBuf.readFloat(), byteBuf.readFloat(), false));
